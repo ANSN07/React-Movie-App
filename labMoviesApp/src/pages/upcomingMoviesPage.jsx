@@ -25,7 +25,7 @@ const UpcomingMoviesPage = (props) => {
   const { data, error, isLoading, isError } = useQuery(
     "upcoming",
     getUpcomingMovies
-  );
+  ); // Caching used in upcoming movies page.
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
