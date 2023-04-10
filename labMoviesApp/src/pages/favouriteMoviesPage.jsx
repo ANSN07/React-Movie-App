@@ -19,7 +19,7 @@ export const genreFiltering = {
   value: "0",
   condition: function (movie, value) {
     // Is user selected genre in this movies's genre list?
-    // Always true if selected genre ia All (0).
+    // Always true if selected genre is All (0).
     const genreId = Number(value);
     const genre_ids = movie.genres.map((g) => g.id);
     return genreId > 0 ? genre_ids.includes(genreId) : true;
