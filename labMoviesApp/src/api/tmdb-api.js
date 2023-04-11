@@ -117,3 +117,20 @@ export const getPopularMovies = () => {
       throw error;
     });
 };
+
+export const getTopRatedMovies = () => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${
+      import.meta.env.VITE_TMDB_KEY
+    }&language=en-US&page=1`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
