@@ -6,6 +6,8 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const styles = {
   gridListRoot: {
@@ -20,6 +22,9 @@ const styles = {
 };
 
 const TemplateMoviePage = ({ movie, children }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+
   const { data, error, isLoading, isError } = useQuery(
     ["images", { id: movie.id }],
     getMovieImages
@@ -41,7 +46,11 @@ const TemplateMoviePage = ({ movie, children }) => {
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid item xs={3}>
           <div sx={styles.gridListRoot}>
-            <ImageList cols={1}>
+            <ImageList
+              sx={{ width: isMobile ? 150 : 300, height: 350 }}
+              cols={1}
+              rowHeight={350}
+            >
               {images.map((image) => (
                 <ImageListItem
                   key={image.file_path}
