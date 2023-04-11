@@ -16,6 +16,7 @@ const styles = {
     alignItems: "center",
     flexWrap: "wrap",
     padding: 1.5,
+    marginTop: "25px",
   },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",

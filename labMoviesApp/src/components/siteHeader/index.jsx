@@ -11,13 +11,22 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Divider from "@mui/material/Divider";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 
 const styles = {
   title: {
     flexGrow: 1,
   },
   appbar: {
-    // background: 'none',
+    backgroundColor: "rgb(3, 37, 65)",
+    boxShadow: "5px 10px 18px #888888",
+  },
+  cursor: { cursor: "pointer" },
+  highlight: {
+    color: "#FFFFFF",
+    background: "linear-gradient(to right bottom, #7e57c2, rgb(3, 37, 65))",
   },
   // offset: theme.mixins.toolbar,
 };
@@ -30,16 +39,26 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const [clicked, setClicked] = useState("");
 
   const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Movies", path: "/" },
     { label: "Favorites", path: "/movies/favourites" },
-    { label: "Option 3", path: "/" },
-    { label: "Option 4", path: "/" },
+  ];
+  const movieOptions = [
+    { label: "Popular", path: "/movies/popular" },
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Top Rated", path: "/movies/top-rated" },
+    { label: "Now Playing", path: "/movies/now-playing" },
   ];
 
   const handleMenuSelect = (pageURL) => {
+    setClicked("");
+    navigate(pageURL);
+  };
+
+  const handleMovieSelect = (key, pageURL) => {
+    setClicked(key);
     navigate(pageURL);
   };
 
@@ -49,12 +68,17 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar sx={styles.appbar} position="fixed" elevation={0} color="primary">
-        <Toolbar>
-          <Typography variant="h4" sx={styles.title}>
+      <AppBar sx={styles.appbar} position="fixed" elevation={0}>
+        <Toolbar variant="dense">
+          <Typography
+            variant="h4"
+            sx={{ ...styles.cursor, ...styles.title }}
+            onClick={() => handleMenuSelect("/")}
+          >
             TMDB Client
           </Typography>
-          <Typography variant="h6" sx={styles.title}>
+
+          <Typography variant="p" sx={styles.title}>
             All you ever wanted to know about Movies!
           </Typography>
           {isMobile ? (
@@ -107,6 +131,28 @@ const SiteHeader = () => {
               ))}
             </>
           )}
+        </Toolbar>
+        <Toolbar variant="dense">
+          <Stack
+            direction="row"
+            sx={{ marginRight: "100px" }}
+            spacing={1}
+            divider={
+              <Divider color="secondary" orientation="vertical" flexItem />
+            }
+          >
+            {movieOptions.map((opt) => (
+              <Chip
+                sx={clicked && clicked === opt.label ? styles.highlight : null}
+                key={opt.label}
+                label={opt.label}
+                size="small"
+                color="primary"
+                variant="outlined"
+                onClick={() => handleMovieSelect(opt.label, opt.path)}
+              />
+            ))}
+          </Stack>
         </Toolbar>
       </AppBar>
       <Offset />

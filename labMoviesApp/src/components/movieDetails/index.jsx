@@ -24,9 +24,10 @@ const styles = {
     margin: 0.5,
   },
   fab: {
+    marginTop: 11,
     position: "fixed",
-    top: 50,
-    right: 2,
+    top: 130,
+    right: 25,
   },
 };
 
@@ -82,6 +83,7 @@ const MovieDetails = ({ movie }) => {
       <Fab
         color="secondary"
         variant="extended"
+        size="small"
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >

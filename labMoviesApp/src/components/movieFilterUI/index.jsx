@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FilterCard from "../filterMoviesCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 export const titleFilter = function (movie, value) {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
@@ -17,10 +18,10 @@ const styles = {
     backgroundColor: "#bfbfbf",
   },
   fab: {
-    marginTop: 8,
+    marginTop: 11,
     position: "fixed",
-    top: 20,
-    right: 2,
+    top: 15,
+    right: 25,
   },
 };
 
@@ -32,10 +33,11 @@ const MovieFilterUI = ({ onFilterValuesChange, titleFilter, genreFilter }) => {
       <Fab
         color="secondary"
         variant="extended"
+        size="small"
         onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
-        Filter
+        <FilterAltIcon fontSize="small" />
       </Fab>
       <Drawer
         anchor="left"
