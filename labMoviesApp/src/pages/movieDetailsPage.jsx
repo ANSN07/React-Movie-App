@@ -27,7 +27,7 @@ const MovieDetailsPage = () => {
             <MovieDetails movie={movie.data} />
           </PageTemplate>
           <br />
-          <ActorList actors={actorList.data} />
+          <ActorList actors={actorList.data} movieId={id} />
         </>
       ) : (
         <p>Waiting for movie details</p>
