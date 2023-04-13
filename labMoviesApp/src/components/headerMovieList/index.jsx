@@ -15,13 +15,13 @@ const styles = {
   },
 };
 
-const Header = (props ) => {
-  const title = props.title
-
+const Header = ({ title, setPage, page, totalPages }) => {
   return (
     <Paper component="div" sx={styles.root}>
       <IconButton
         aria-label="go back"
+        onClick={() => setPage((prevState) => prevState - 1)}
+        disabled={page === 1}
       >
         <ArrowBackIcon color="primary" fontSize="large" />
       </IconButton>
@@ -31,6 +31,8 @@ const Header = (props ) => {
       </Typography>
       <IconButton
         aria-label="go forward"
+        onClick={() => setPage((prevState) => prevState + 1)}
+        disabled={page === totalPages}
       >
         <ArrowForwardIcon color="primary" fontSize="large" />
       </IconButton>

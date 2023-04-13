@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from "../templateMovieListPage";
 import Spinner from "../spinner";
 import useFiltering from "../../hooks/useFiltering";
@@ -22,7 +22,12 @@ const movieSorting = {
 };
 
 const TemplateMovieCategoryPage = ({ title, keyValue, api, action }) => {
-  const { data, error, isLoading, isError } = useQuery(keyValue, api);
+  const [page, setPage] = useState(1);
+  const { data, error, isLoading, isError } = useQuery(
+    [keyValue, { page }],
+    api,
+    { keepPreviousData: true }
+  );
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
@@ -36,7 +41,7 @@ const TemplateMovieCategoryPage = ({ title, keyValue, api, action }) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  
+
   const changeFilterValues = (type, value) => {
     const changedFilter = { name: type, value: value };
     const updatedFilterSet =
@@ -55,7 +60,14 @@ const TemplateMovieCategoryPage = ({ title, keyValue, api, action }) => {
 
   return (
     <>
-      <PageTemplate title={title} movies={sortedMovies} action={action} />
+      <PageTemplate
+        title={title}
+        movies={sortedMovies}
+        action={action}
+        page={page}
+        setPage={setPage}
+        totalPages={data.total_pages}
+      />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}

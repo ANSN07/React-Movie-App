@@ -1,8 +1,10 @@
-export const getMovies = () => {
+export const getMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&include_adult=false&include_video=false&page=1`
+    }&language=en-US&include_adult=false&include_video=false&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -84,11 +86,13 @@ export const getMovieReviews = (id) => {
     });
 };
 
-export const getUpcomingMovies = () => {
+export const getUpcomingMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=1`
+    }&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -101,11 +105,13 @@ export const getUpcomingMovies = () => {
     });
 };
 
-export const getPopularMovies = () => {
+export const getPopularMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=1`
+    }&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -118,11 +124,13 @@ export const getPopularMovies = () => {
     });
 };
 
-export const getTopRatedMovies = () => {
+export const getTopRatedMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/movie/top_rated?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=1`
+    }&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
@@ -135,11 +143,13 @@ export const getTopRatedMovies = () => {
     });
 };
 
-export const getNowPlayingMovies = () => {
+export const getNowPlayingMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&page=1`
+    }&language=en-US&page=${page}`
   )
     .then((response) => {
       if (!response.ok) {
