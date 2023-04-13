@@ -53,6 +53,22 @@ export default function FilterMoviesCard(props) {
     handleUserImput(e, "genre", e.target.value);
   };
 
+  const sortCriterias = [
+    { id: 0, category: "None" },
+    { id: 1, category: "Title (A-Z)" },
+    { id: 2, category: "Title (Z-A)" },
+    { id: 3, category: "Popularity Ascending" },
+    { id: 4, category: "Popularity Descending" },
+    { id: 5, category: "Rating Ascending" },
+    { id: 6, category: "Rating Descending" },
+    { id: 7, category: "Release Date Ascending" },
+    { id: 8, category: "Release Date Descending" },
+  ];
+
+  const handleSorting = (e) => {
+    handleUserImput(e, "sort", e.target.value);
+  };
+
   return (
     <>
       <Card sx={styles.root} variant="outlined">
@@ -95,6 +111,23 @@ export default function FilterMoviesCard(props) {
             <SortIcon fontSize="large" />
             Sort the movies.
           </Typography>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="sort-label">Sort by</InputLabel>
+            <Select
+              labelId="sort-label"
+              id="sort-select"
+              value={props.sort}
+              onChange={handleSorting}
+            >
+              {sortCriterias.map((c) => {
+                return (
+                  <MenuItem key={c.id} value={c.id}>
+                    {c.category}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </CardContent>
       </Card>
     </>

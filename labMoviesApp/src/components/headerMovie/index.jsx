@@ -47,8 +47,9 @@ const MovieHeader = (props) => {
         <a href={movie.homepage}>
           <HomeIcon color="primary" fontSize="='large" />
         </a>
-        <br />
-        <span>{`${movie.tagline}`} </span>
+        <Typography variant="h6" component="h6">
+          {`${movie.tagline}`}
+        </Typography>
       </Typography>
       <IconButton aria-label="go forward">
         <ArrowForwardIcon color="primary" fontSize="large" />

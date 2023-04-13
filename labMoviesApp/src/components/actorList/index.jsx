@@ -13,7 +13,10 @@ const ActorList = ({ actors, movieId }) => {
     <>
       <Typography variant="h5" component="h3" sx={{ marginLeft: 2 }}>
         Cast & Crew
-        <Link to={`/movies/${movieId}/actors`}>
+        <Link
+          to={`/movies/${movieId}/actors`}
+          style={{ textDecoration: "none" }}
+        >
           <Button
             variant="contained"
             size="small"
