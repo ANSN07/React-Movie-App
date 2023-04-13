@@ -8,6 +8,7 @@ import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 import WriteReview from "../components/cardIcons/writeReview";
+import useSorting from "../hooks/useSorting";
 
 const titleFiltering = {
   name: "title",
@@ -25,6 +26,10 @@ export const genreFiltering = {
     return genreId > 0 ? genre_ids.includes(genreId) : true;
   },
 };
+const movieSorting = {
+  name: "sort",
+  value: 0,
+};
 
 const FavouriteMoviesPage = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
@@ -32,6 +37,9 @@ const FavouriteMoviesPage = () => {
     [],
     [titleFiltering, genreFiltering]
   );
+  const { sortValues, setSortValues, sortFunction } = useSorting([
+    movieSorting,
+  ]);
 
   // Create an array of queries and run them in parallel.
   const favouriteMovieQueries = useQueries(
@@ -50,15 +58,21 @@ const FavouriteMoviesPage = () => {
   }
 
   const allFavourites = favouriteMovieQueries.map((q) => q.data);
-  const displayMovies = allFavourites ? filterFunction(allFavourites) : [];
-  
+  const displayMovies = allFavourites
+    ? sortFunction(filterFunction(allFavourites))
+    : [];
+
   const changeFilterValues = (type, value) => {
     const changedFilter = { name: type, value: value };
     const updatedFilterSet =
       type === "title"
         ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+        : type === "genre"
+        ? [filterValues[0], changedFilter]
+        : [filterValues[0], filterValues[1]];
+    const updatedSortValue = type === "sort" ? [changedFilter] : sortValues;
     setFilterValues(updatedFilterSet);
+    setSortValues(updatedSortValue);
   };
 
   return (
@@ -79,6 +93,7 @@ const FavouriteMoviesPage = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        sort={sortValues[0].value}
       />
     </>
   );
