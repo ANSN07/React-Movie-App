@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FullCastAndCrewPage from "./pages/fullCastAndCrewPage";
+import ActorDetailsPage from "./pages/actorDetailsPage";
 import AuthContextProvider from "./contexts/AuthContext";
 import PrivateRoutes from "./components/privateRoutes";
 import LoginPage from "./pages/loginPage";
@@ -59,6 +60,7 @@ const App = () => {
                   path="/movies/:id/actors"
                   element={<FullCastAndCrewPage />}
                 />
+                <Route path="/person/:id" element={<ActorDetailsPage />} />
                 <Route path="/reviews/:id" element={<MovieReviewPage />} />
                 <Route path="/movies/:id" element={<MoviePage />} />
               </Route>

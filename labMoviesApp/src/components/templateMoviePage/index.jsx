@@ -1,30 +1,12 @@
 import React from "react";
 import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
-
-const styles = {
-  gridListRoot: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-  },
-  gridList: {
-    width: 450,
-    height: "100vh",
-  },
-};
+import ImageListComponent from "../imageList";
 
 const TemplateMoviePage = ({ movie, children }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-
   const { data, error, isLoading, isError } = useQuery(
     ["images", { id: movie.id }],
     getMovieImages
@@ -44,29 +26,7 @@ const TemplateMoviePage = ({ movie, children }) => {
       <MovieHeader movie={movie} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
-        <Grid item xs={3}>
-          <div sx={styles.gridListRoot}>
-            <ImageList
-              sx={{ width: isMobile ? 150 : 300, height: 350 }}
-              cols={1}
-              rowHeight={350}
-            >
-              {images.map((image) => (
-                <ImageListItem
-                  key={image.file_path}
-                  sx={styles.gridListTile}
-                  cols={1}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                    alt={image.poster_path}
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </div>
-        </Grid>
-
+        <ImageListComponent images={images} />
         <Grid item xs={9}>
           {children}
         </Grid>
