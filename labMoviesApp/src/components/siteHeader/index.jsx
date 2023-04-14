@@ -15,6 +15,8 @@ import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { useAuth } from "../../contexts/AuthContext";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 
 const styles = {
   title: {
@@ -77,13 +79,28 @@ const SiteHeader = () => {
     <>
       <AppBar sx={styles.appbar} position="fixed" elevation={0}>
         <Toolbar variant="dense">
-          <Typography
-            variant="h4"
-            sx={{ ...styles.cursor, ...styles.title }}
-            onClick={() => handleMenuSelect("/")}
-          >
-            TMDB Client
-          </Typography>
+          <Stack direction={"row"}>
+            <Typography
+              variant="h4"
+              sx={{ ...styles.cursor, ...styles.title }}
+              onClick={() => handleMenuSelect("/")}
+            >
+              TMDB Client
+            </Typography>
+            <Avatar
+              sx={{
+                cursor: "pointer",
+                width: 35,
+                height: 35,
+                marginLeft: 2,
+                marginTop: 0.5,
+                marginRight: 25,
+              }}
+              onClick={() => handleMenuSelect("/myMovies")}
+            >
+              <AccountCircleIcon />
+            </Avatar>
+          </Stack>
 
           <Typography variant="p" sx={styles.title}>
             All you ever wanted to know about Movies!
@@ -182,10 +199,7 @@ const SiteHeader = () => {
               </Link>
             )}
             {!user && (
-              <Link
-                to="/register"
-                style={{ textDecoration: "none" }}
-              >
+              <Link to="/register" style={{ textDecoration: "none" }}>
                 <Chip
                   style={{ textTransform: "none" }}
                   label="Register"

@@ -20,6 +20,8 @@ import AuthContextProvider from "./contexts/AuthContext";
 import PrivateRoutes from "./components/privateRoutes";
 import LoginPage from "./pages/loginPage";
 import RegisterUser from "./pages/registerUserPage";
+import MyMoviesPage from "./pages/myMoviesPage";
+import AddFantasyMoviePage from "./pages/addFantasyMoviePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -63,6 +65,8 @@ const App = () => {
                 <Route path="/person/:id" element={<ActorDetailsPage />} />
                 <Route path="/reviews/:id" element={<MovieReviewPage />} />
                 <Route path="/movies/:id" element={<MoviePage />} />
+                <Route path="/myMovies" element={<MyMoviesPage />} />
+                <Route path="/myMovies/create" element={<AddFantasyMoviePage />} />
               </Route>
               <Route
                 path="/movies/favourites"
