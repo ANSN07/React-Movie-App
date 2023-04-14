@@ -228,3 +228,4 @@ Form validation is provided, where proper error messages are shown to user. Snac
 [image23]: ./images/image23.png
 [image24]: ./images/image24.png
 [image25]: ./images/image25.png
+[image26]: ./images/image26.png
