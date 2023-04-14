@@ -14,7 +14,11 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
-import FullCastAndCrewPage from './pages/fullCastAndCrewPage';
+import FullCastAndCrewPage from "./pages/fullCastAndCrewPage";
+import AuthContextProvider from "./contexts/AuthContext";
+import PrivateRoutes from "./components/privateRoutes";
+import LoginPage from "./pages/loginPage";
+import RegisterUser from "./pages/registerUserPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,25 +34,43 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <SiteHeader />
-        <MoviesContextProvider>
-          <Routes>
-            <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-            <Route path="/movies/popular" element={<PopularMoviesPage />} />
-            <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
-            <Route path="/movies/now-playing" element={<NowPlayingMoviesPage />} />
-            <Route path="/movies/:id/actors" element={<FullCastAndCrewPage />} />
-            <Route path="/reviews/:id" element={<MovieReviewPage />} />
-            <Route
-              path="/movies/favourites"
-              element={<FavouriteMoviesPage />}
-            />
-            <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </MoviesContextProvider>
+        <AuthContextProvider>
+          <SiteHeader />
+          <MoviesContextProvider>
+            <Routes>
+              <Route path="/register" element={<RegisterUser />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+                <Route path="/movies/popular" element={<PopularMoviesPage />} />
+                <Route
+                  path="/movies/upcoming"
+                  element={<UpcomingMoviesPage />}
+                />
+                <Route
+                  path="/movies/top-rated"
+                  element={<TopRatedMoviesPage />}
+                />
+                <Route
+                  path="/movies/now-playing"
+                  element={<NowPlayingMoviesPage />}
+                />
+                <Route
+                  path="/movies/:id/actors"
+                  element={<FullCastAndCrewPage />}
+                />
+                <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                <Route path="/movies/:id" element={<MoviePage />} />
+              </Route>
+              <Route
+                path="/movies/favourites"
+                element={<FavouriteMoviesPage />}
+              />
+              <Route path="/" element={<HomePage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </MoviesContextProvider>
+        </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

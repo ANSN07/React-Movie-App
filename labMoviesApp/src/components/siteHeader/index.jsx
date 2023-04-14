@@ -8,12 +8,13 @@ import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { useAuth } from "../../contexts/AuthContext";
 
 const styles = {
   title: {
@@ -40,6 +41,12 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [clicked, setClicked] = useState("");
+  const { user, logOut } = useAuth();
+
+  const handleLogout = async () => {
+    await logOut();
+    navigate("/login");
+  };
 
   const menuOptions = [
     { label: "Movies", path: "/" },
@@ -132,27 +139,72 @@ const SiteHeader = () => {
             </>
           )}
         </Toolbar>
-        <Toolbar variant="dense">
-          <Stack
-            direction="row"
-            sx={{ marginRight: "100px" }}
-            spacing={1}
-            divider={
-              <Divider color="secondary" orientation="vertical" flexItem />
-            }
-          >
-            {movieOptions.map((opt) => (
-              <Chip
-                sx={clicked && clicked === opt.label ? styles.highlight : null}
-                key={opt.label}
-                label={opt.label}
-                size="small"
-                color="primary"
-                variant="outlined"
-                onClick={() => handleMovieSelect(opt.label, opt.path)}
-              />
-            ))}
-          </Stack>
+        <Toolbar variant="dense" style={{ justifyContent: "space-between" }}>
+          <div>
+            {user && (
+              <Stack
+                direction="row"
+                sx={{ marginRight: "100px" }}
+                spacing={1}
+                divider={
+                  <Divider color="secondary" orientation="vertical" flexItem />
+                }
+              >
+                {movieOptions.map((opt) => (
+                  <Chip
+                    sx={
+                      clicked && clicked === opt.label ? styles.highlight : null
+                    }
+                    key={opt.label}
+                    label={opt.label}
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => handleMovieSelect(opt.label, opt.path)}
+                  />
+                ))}
+              </Stack>
+            )}
+          </div>
+          <div>
+            {!user && (
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", marginRight: 10 }}
+              >
+                <Chip
+                  label="Login"
+                  style={{ textTransform: "none" }}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
+              </Link>
+            )}
+            {!user && (
+              <Link
+                to="/register"
+                style={{ textDecoration: "none" }}
+              >
+                <Chip
+                  style={{ textTransform: "none" }}
+                  label="Register"
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                />
+              </Link>
+            )}
+          </div>
+          {user && (
+            <Chip
+              label="Logout"
+              size="small"
+              color="primary"
+              variant="outlined"
+              onClick={handleLogout}
+            />
+          )}
         </Toolbar>
       </AppBar>
       <Offset />
