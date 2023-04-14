@@ -178,7 +178,7 @@ __Name:__ Alka Nixon
 + /movie/popular (Protected) - List of all popular movies.
 + /movie/top_rated (Protected) - List of all top rated movies.
 + /movie/now_playing (Protected) - List of all movies now playing in the theatres.
-+ /genre/movie/list (Protected) - List of all genres.
++ /genre/movie/list - List of all genres.
 + /movie/{movie_id}/images (Protected) - List of all images on a specific movie.
 + /movies/{movie_id} (Protected) - Detailed information on a specific movie.
 + /movie/{movie_id}/reviews (Protected) - List of all reviews on a specific movie.
