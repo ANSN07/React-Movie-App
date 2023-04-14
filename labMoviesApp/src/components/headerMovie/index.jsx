@@ -8,6 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -41,16 +42,20 @@ const MovieHeader = (props) => {
           <FavoriteIcon />
         </Avatar>
       ) : null}
-      <Typography variant="h4" component="h3">
-        {movie.title}
-        {"   "}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary" fontSize="='large" />
-        </a>
+      <div>
+        <Typography variant="h4" component="h3">
+          <Link style={{ textDecoration: "none" }} to={`/movies/${movie.id}`}>
+            {movie.title}
+          </Link>
+          {"   "}
+          <a href={movie.homepage}>
+            <HomeIcon color="primary" fontSize="='large" />
+          </a>
+        </Typography>
         <Typography variant="h6" component="h6">
           {`${movie.tagline}`}
         </Typography>
-      </Typography>
+      </div>
       <IconButton aria-label="go forward">
         <ArrowForwardIcon color="primary" fontSize="large" />
       </IconButton>
