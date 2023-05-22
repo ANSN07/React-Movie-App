@@ -14,7 +14,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { useAuth } from "../../contexts/AuthContext";
+// import { useAuth } from "../../contexts/AuthContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Avatar from "@mui/material/Avatar";
 
@@ -43,14 +43,15 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [clicked, setClicked] = useState("");
-  const { user, logOut } = useAuth();
+  // const { user, logOut } = useAuth();
 
-  const handleLogout = async () => {
-    await logOut();
-    navigate("/login");
-  };
+  // const handleLogout = async () => {
+  //   await logOut();
+  //   navigate("/login");
+  // };
 
   const menuOptions = [
+    { label: "Reviews", path: "/myReviews" },
     { label: "Movies", path: "/" },
     { label: "Favorites", path: "/movies/favourites" },
   ];
@@ -87,6 +88,32 @@ const SiteHeader = () => {
             >
               TMDB Client
             </Typography>
+            <Link to="/signup">
+              <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                sx={{
+                  textTransform: "none",
+                  marginLeft: 2,
+                }}
+              >
+                Sign Up
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                sx={{
+                  textTransform: "none",
+                  marginLeft: 2,
+                }}
+              >
+                Log In
+              </Button>
+            </Link>
             <Avatar
               sx={{
                 cursor: "pointer",
@@ -158,32 +185,32 @@ const SiteHeader = () => {
         </Toolbar>
         <Toolbar variant="dense" style={{ justifyContent: "space-between" }}>
           <div>
-            {user && (
-              <Stack
-                direction="row"
-                sx={{ marginRight: "100px" }}
-                spacing={1}
-                divider={
-                  <Divider color="secondary" orientation="vertical" flexItem />
-                }
-              >
-                {movieOptions.map((opt) => (
-                  <Chip
-                    sx={
-                      clicked && clicked === opt.label ? styles.highlight : null
-                    }
-                    key={opt.label}
-                    label={opt.label}
-                    size="small"
-                    color="primary"
-                    variant="outlined"
-                    onClick={() => handleMovieSelect(opt.label, opt.path)}
-                  />
-                ))}
-              </Stack>
-            )}
+            {/* {user && ( */}
+            <Stack
+              direction="row"
+              sx={{ marginRight: "100px" }}
+              spacing={1}
+              divider={
+                <Divider color="secondary" orientation="vertical" flexItem />
+              }
+            >
+              {movieOptions.map((opt) => (
+                <Chip
+                  sx={
+                    clicked && clicked === opt.label ? styles.highlight : null
+                  }
+                  key={opt.label}
+                  label={opt.label}
+                  size="small"
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => handleMovieSelect(opt.label, opt.path)}
+                />
+              ))}
+            </Stack>
+            {/* )} */}
           </div>
-          <div>
+          {/* <div>
             {!user && (
               <Link
                 to="/login"
@@ -209,8 +236,8 @@ const SiteHeader = () => {
                 />
               </Link>
             )}
-          </div>
-          {user && (
+          </div> */}
+          {/* {user && (
             <Chip
               label="Logout"
               size="small"
@@ -218,7 +245,7 @@ const SiteHeader = () => {
               variant="outlined"
               onClick={handleLogout}
             />
-          )}
+          )} */}
         </Toolbar>
       </AppBar>
       <Offset />
