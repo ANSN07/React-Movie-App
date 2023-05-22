@@ -23,6 +23,31 @@ export const getMovie = (args) => {
   }).then((res) => res.json());
 };
 
+export const getUserReviews = (args) => {
+  const [, idPart] = args.queryKey;
+  const { id } = idPart;
+  // const id = window.localStorage.getItem("id");
+  return fetch(`/api/accounts/${id}/reviews`)
+    .then((res) => res.json());
+};
+
+export const postUserReviews = (data) => {
+  const id = window.localStorage.getItem("id");
+  return fetch(`/api/accounts/${id}/reviews`, {
+    method: "post",
+    body: JSON.stringify({
+      movieId: data.movieId,
+      author: data.author,
+      review: data.review,
+      rating: data.rating,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json());
+};
+
 export const getGenres = async () => {
   return fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +

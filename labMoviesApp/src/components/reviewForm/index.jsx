@@ -5,12 +5,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useForm, Controller } from "react-hook-form";
-import { MoviesContext } from "../../contexts/moviesContext";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import ratings from "./ratingCategories";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { postUserReviews } from "../../api/tmdb-api";
 
 const ReviewForm = ({ movie }) => {
   const defaultValues = {
@@ -26,7 +26,6 @@ const ReviewForm = ({ movie }) => {
     reset,
   } = useForm(defaultValues);
   const navigate = useNavigate();
-  const context = useContext(MoviesContext);
   const [rating, setRating] = useState(3);
   const [open, setOpen] = useState(false);
 
@@ -39,12 +38,13 @@ const ReviewForm = ({ movie }) => {
     navigate("/movies/favourites");
   };
 
-  const onSubmit = (review) => {
+  const onSubmit = async (review) => {
     review.movieId = movie.id;
     review.rating = rating;
-    // console.log(review);
-    context.addReview(movie, review);
-    setOpen(true);
+    await postUserReviews(review).then((result) => {
+      setOpen(true);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   return (
@@ -157,7 +157,7 @@ const ReviewForm = ({ movie }) => {
             onClick={() => {
               reset({
                 author: "",
-                content: "",
+                review: "",
               });
             }}
           >

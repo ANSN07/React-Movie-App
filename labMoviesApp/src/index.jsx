@@ -22,6 +22,7 @@ import LoginPage from "./pages/loginPage";
 // import RegisterUser from "./pages/registerUserPage";
 import SignUpPage from "./pages/signUpPage";
 import MyMoviesPage from "./pages/myMoviesPage";
+import MyReviewsPage from "./pages/myReviewsPage";
 import AddFantasyMoviePage from "./pages/addFantasyMoviePage";
 import AuthContextProvider from "./contexts/authAPIContext";
 import PrivateRoute from "./privateRoute";
@@ -75,7 +76,8 @@ const App = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path="/myMovies" element={<MyMoviesPage />} />
+              <Route path="/myMovies" element={<PrivateRoute><MyMoviesPage /></PrivateRoute>} />
+              <Route path="/myReviews" element={<PrivateRoute><MyReviewsPage /></PrivateRoute>} />
               <Route
                 path="/myMovies/create"
                 element={<AddFantasyMoviePage />}

@@ -51,6 +51,7 @@ const SiteHeader = () => {
   // };
 
   const menuOptions = [
+    { label: "Reviews", path: "/myReviews" },
     { label: "Movies", path: "/" },
     { label: "Favorites", path: "/movies/favourites" },
   ];
