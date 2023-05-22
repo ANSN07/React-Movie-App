@@ -16,12 +16,16 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import FullCastAndCrewPage from "./pages/fullCastAndCrewPage";
 import ActorDetailsPage from "./pages/actorDetailsPage";
-import AuthContextProvider from "./contexts/AuthContext";
-import PrivateRoutes from "./components/privateRoutes";
+// import AuthContextProvider from "./contexts/AuthContext";
+// import PrivateRoutes from "./components/privateRoutes";
 import LoginPage from "./pages/loginPage";
-import RegisterUser from "./pages/registerUserPage";
+// import RegisterUser from "./pages/registerUserPage";
+import SignUpPage from "./pages/signUpPage";
 import MyMoviesPage from "./pages/myMoviesPage";
 import AddFantasyMoviePage from "./pages/addFantasyMoviePage";
+import AuthContextProvider from "./contexts/authAPIContext";
+import PrivateRoute from "./privateRoute";
+import AuthHeader from "./authHeader";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,36 +42,45 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthContextProvider>
+          <AuthHeader />
           <SiteHeader />
           <MoviesContextProvider>
             <Routes>
-              <Route path="/register" element={<RegisterUser />} />
+              {/* <Route path="/register" element={<RegisterUser />} /> */}
+              <Route path="/signup" element={<SignUpPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route element={<PrivateRoutes />}>
-                <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-                <Route path="/movies/popular" element={<PopularMoviesPage />} />
-                <Route
-                  path="/movies/upcoming"
-                  element={<UpcomingMoviesPage />}
-                />
-                <Route
-                  path="/movies/top-rated"
-                  element={<TopRatedMoviesPage />}
-                />
-                <Route
-                  path="/movies/now-playing"
-                  element={<NowPlayingMoviesPage />}
-                />
-                <Route
-                  path="/movies/:id/actors"
-                  element={<FullCastAndCrewPage />}
-                />
-                <Route path="/person/:id" element={<ActorDetailsPage />} />
-                <Route path="/reviews/:id" element={<MovieReviewPage />} />
-                <Route path="/movies/:id" element={<MoviePage />} />
-                <Route path="/myMovies" element={<MyMoviesPage />} />
-                <Route path="/myMovies/create" element={<AddFantasyMoviePage />} />
-              </Route>
+              {/* <Route element={<PrivateRoutes />}> */}
+              <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+              <Route path="/movies/popular" element={<PopularMoviesPage />} />
+              <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+              <Route
+                path="/movies/top-rated"
+                element={<TopRatedMoviesPage />}
+              />
+              <Route
+                path="/movies/now-playing"
+                element={<NowPlayingMoviesPage />}
+              />
+              <Route
+                path="/movies/:id/actors"
+                element={<FullCastAndCrewPage />}
+              />
+              <Route path="/person/:id" element={<ActorDetailsPage />} />
+              <Route path="/reviews/:id" element={<MovieReviewPage />} />
+              <Route
+                path="/movies/:id"
+                element={
+                  <PrivateRoute>
+                    <MoviePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/myMovies" element={<MyMoviesPage />} />
+              <Route
+                path="/myMovies/create"
+                element={<AddFantasyMoviePage />}
+              />
+              {/* </Route> */}
               <Route
                 path="/movies/favourites"
                 element={<FavouriteMoviesPage />}
